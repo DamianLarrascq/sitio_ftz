@@ -5,11 +5,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+load_dotenv('./config/.secrets')
 load_dotenv('app/config/.secrets')
 sqlalchemy_url = os.getenv('SQLALCHEMY_DATABASE_URL')
 
 engine = create_engine(
-    sqlalchemy_url, connect_args={"check_same_thread": False}
+    sqlalchemy_url
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
