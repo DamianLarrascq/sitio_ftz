@@ -17,7 +17,7 @@ def get_user_by_email(db: Session, email: str) -> models.User:
 
 
 def get_user_by_id(db: Session, user_id: int):
-    result = db.query(models.user).filter(models.User.id == user_id).fist()
+    result = db.query(models.User).filter(models.User.id == user_id).fist()
 
 
 def create_user(db: Session, email: str, password: str):

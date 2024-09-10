@@ -1,6 +1,7 @@
 from typing import Annotated
 from fastapi import Depends, APIRouter, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from starlette.requests import Request
 from app.controllers import crud
@@ -15,6 +16,13 @@ def get_db():
     finally:
         db.close()
 
+
+SECRET_KEY = "9f2ebf8fc8a9ada04a03ec1d7a862fdbce4328e0971df6c0090634a845a28b54"
+ALGORITHM = "HS256"
+ACCESSS_TOKEN_EXPIRE_MINUTES = 30
+
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
@@ -60,4 +68,3 @@ async def post_users(request: Request, user: schemas.UserCreate, db: Session = D
     result = crud.create_user(db, user.email, user.password)
 
     return result
-
